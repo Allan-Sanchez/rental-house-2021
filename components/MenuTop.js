@@ -1,7 +1,7 @@
 const MenuTop = () => {
   return (
     <div className="w-full h-20 flex  justify-around items-center mt-5">
-      <div className="relative flex w-4/12 flex-wrap items-stretch mb-3">
+      <div className=" hidden relative md:flex w-4/12 flex-wrap items-stretch mb-3">
         <input
           type="text"
           placeholder="Buscar Inquilino"

@@ -9,7 +9,7 @@ export default function Navbar() {
     router.push(path);
   };
   return (
-    <div className="menu w-72 bg-pink-primary-200 min-h-screen">
+    <div className="menu w-72 bg-pink-primary-200 min-h-screen hidden lg:block">
       <div className="w-72 fixed">
         <div className="py-5 cursor-pointer" onClick={() => handleRouter("/")}>
           <Logo className="mx-auto" />
@@ -25,7 +25,7 @@ export default function Navbar() {
           <ul className="mt-10">
             <li
               className={ `${router.pathname === "/Users" ?`text-pink-primary-500`:`text-gray-500` } h-12 flex justify-center  items-center text-lg  w-full px-5  cursor-pointer`}
-              onClick={() => handleRouter("Users")}
+              onClick={() => handleRouter("/Users")}
             >
               <div className="w-2/3 flex justify-end">
                 <div className="w-1/3">
@@ -50,7 +50,7 @@ export default function Navbar() {
 
             <li
               className={`${router.pathname === "/Houses" ?`text-pink-primary-500`:`text-gray-500` } h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
-              onClick={() => handleRouter("Houses")}
+              onClick={() => handleRouter("/Houses")}
             >
               <div className="w-2/3 flex justify-end">
                 <div className="w-1/3">
@@ -75,7 +75,7 @@ export default function Navbar() {
 
             <li
               className={` ${router.pathname === "/Services" ?`text-pink-primary-500`:`text-gray-500` } h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
-              onClick={() => handleRouter("Services")}
+              onClick={() => handleRouter("/Services")}
             >
               <div className="w-2/3 flex justify-end">
                 <div className="w-1/3">

@@ -5,7 +5,7 @@ import StockHouse from "../components/home/StockHouse";
 export default function Home() {
   return (
     <div className="w-full  flex">
-            <div className="w-2/3">
+            <div className=" w-full xl:w-2/3">
               <h2 className="text-2xl text-pink-600 my-5">Casas Disponibles</h2>
               <StockHouse />
 
@@ -13,7 +13,7 @@ export default function Home() {
                   <Chart/>
               </div>
             </div>
-            <div className="w-1/3">
+            <div className="hidden xl:block w-1/3">
               <h2 className="text-center my-5 text-2xl text-pink-primary-600">
                 Reportes
               </h2>

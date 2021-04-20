@@ -1,33 +1,29 @@
 // import { formatDistanceToNow } from "date-fns";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 import Router from "next/router";
 
 const RowComponent = ({ title, data }) => {
   const { id } = data;
 
   const handleDeleteClient = () => {
-    //   Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Yes, delete it!",
-    //   }).then(async (result) => {
-    //     if (result.isConfirmed) {
-    //       try {
-    //         const { data } = await deleteProduct({
-    //           variables: {
-    //             id,
-    //           },
-    //         });
-    //         Swal.fire("Deleted!", data.deleteClient, "success");
-    //       } catch (error) {
-    //         console.log(error);
-    //       }
-    //     }
-    //   });
+      Swal.fire({
+        title: "Estas Seguro?",
+        text: "Si tu eliminas a el usuario esto sera irreversible!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText:"Cancelar",
+        confirmButtonText: "SI, Eliminalo!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            Swal.fire("Deleted!", "Elimnado correctamente", "success");
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
   };
 
   const handleEditClient = () => {

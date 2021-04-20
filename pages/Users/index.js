@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router'
 import TableComponent from "../../components/users/TableComponent";
 
 const Users = () => {
+  const router = useRouter();
   const title = ["id", "nombre","phone", "email", "Acciones"];
   const body = [
     {
@@ -20,11 +22,14 @@ const Users = () => {
         test: "rest",
       },
   ];
+  const handleNewUser = () =>{
+    router.push('/Users/NewUser')
+  }
   return (
     <>
       <div className="w-full flex justify-around">
         <h2 className="text-2xl text-pink-600 my-5 font-bold">Usuarios</h2>
-        <div className="h-12 w-40 rounded-2xl bg-pink-primary-600 flex justify-center items-center text-white my-5">
+        <div className="h-12 w-40 rounded-2xl bg-pink-primary-600 flex justify-center items-center text-white my-5 cursor-pointer font-bold" onClick={handleNewUser}>
           Nuevo Usuario
         </div>
       </div>
