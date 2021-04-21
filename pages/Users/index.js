@@ -1,8 +1,11 @@
+import React,{useContext} from 'react';
 import { useRouter } from 'next/router'
 import TableComponent from "../../components/users/TableComponent";
-
+import {FirebaseContext} from "../../firebase"
 const Users = () => {
   const router = useRouter();
+  const {firebase} = useContext(FirebaseContext);
+  console.log(firebase.auth.currentUser);
   const title = ["id", "nombre","phone", "email", "Acciones"];
   const body = [
     {

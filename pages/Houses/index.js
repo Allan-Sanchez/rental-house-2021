@@ -1,26 +1,10 @@
 import { useRouter } from "next/router";
 import TableComponent from "../../components/houses/TableComponent";
+import useHouses from "../../hook/useHouses";
 const Houses = () => {
   const router = useRouter();
-  const title = ["id", "nombre", "direccion", "tipo", "Acciones"];
-  const body = [
-    {
-      id: 1,
-      name: "Allan Sanchez",
-      phone: "Canton Calvario",
-      email: "Casa",
-      actions: "rest",
-      test: "rest",
-    },
-    {
-      id: 2,
-      name: "Allan Sanchez",
-      phone: "Canton Elena",
-      email: "Departamento",
-      actions: "rest",
-      test: "rest",
-    },
-  ];
+  const { houses } = useHouses();
+  const title = ["NIS", "Direccion", "Tipo", "Acciones"];
 
   const handleNewHouse = () => {
     router.push("/Houses/NewHouse");
@@ -37,7 +21,7 @@ const Houses = () => {
         </div>
       </div>
       <div className="w-full">
-        <TableComponent title={title} data={body} />
+        <TableComponent title={title} data={houses} />
       </div>
     </>
   );

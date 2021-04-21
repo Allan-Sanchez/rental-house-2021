@@ -3,9 +3,6 @@ import RowComponent from "./RowComponent";
 
 
 const TableComponent = ({ title, data }) => {
-    data.map((item) => {
-        console.log(item);
-    });
     return(
 
     <table className="border-collapse w-full lg:mt-10 ">

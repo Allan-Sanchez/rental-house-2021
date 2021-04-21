@@ -1,8 +1,15 @@
+import React,{useState} from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {useRouter} from 'next/router';
+import firebase from "../firebase"
 import Logo from "../icons/Logo";
+import AlertMessage from '../components/AlertMessage';
 
 export default function Login() {
+   const [message, getMessage] = useState(null);
+  const [messageInfo, getMessageInfo] = useState({});
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -16,11 +23,24 @@ export default function Login() {
         .min(8, "La contraseña debe tener al menos 8 caracters")
         .required("La contraseña es requerida"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      let {email,password} = values
+      try {
+        await firebase.login(email,password)
+        router.push('/')
+      } catch (error) {
+       getMessage(true);
+        getMessageInfo({
+          typeError: "Error",
+          message: "La contraseña o el correo no son correctos",
+        });
+        console.log(error);
+      }
     },
   });
   return (
+    <>
+     {message ? (<AlertMessage messageInfo={messageInfo}/>) : null}
     <div className="bg-pink-primary-200 w-full h-screen flex justify-center items-center">
       <div className="bg-white w-11/12 md:w-8/12 lg:w-4/12 flex flex-col items-center rounded-2xl py-10">
         <div>
@@ -119,5 +139,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 }

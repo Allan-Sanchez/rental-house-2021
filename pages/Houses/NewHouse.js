@@ -1,10 +1,15 @@
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
+import { FirebaseContext } from "../../firebase";
 const NewHouse = () => {
+  const { firebase, user } = useContext(FirebaseContext);
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       nis: "",
-      type: "",
+      type: 1,
       address: "",
       detail: "",
     },
@@ -16,7 +21,16 @@ const NewHouse = () => {
       address: Yup.string().required("La direccion es requerida"),
       detail: Yup.string().required("Escrbir al menos un detalle de la casa"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      if (!user) {
+        return router.push("/Login");
+      }
+      try {
+        await firebase.db.collection("houses").add(values);
+        router.push('/Houses')
+      } catch (error) {
+        console.log(error);
+      }
       console.log(values);
     },
   });

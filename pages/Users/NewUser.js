@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Router from "next/router";
+import firebase from "../../firebase";
 const NewUser = () => {
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
-      confirmPassword:""
+      confirmPassword: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("El nombre es requerido"),
@@ -20,8 +22,17 @@ const NewUser = () => {
         .min(8, "La contraseña debe tener al menos 8 caracters")
         .required("La contraseña es requerida"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      let { password, confirmPassword } = values;
+      if (password !== confirmPassword) {
+        return;
+      }
+      try {
+        await firebase.register(values.name, values.email, password);
+        Router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
   return (
@@ -37,7 +48,10 @@ const NewUser = () => {
             alt="avatar"
           />
         </div>
-        <form className="flex flex-col items-center">
+        <form
+          className="flex flex-col items-center"
+          onSubmit={formik.handleSubmit}
+        >
           <div className="w-11/12 lg:w:8/12  flex flex-wrap justify-center  items-center my-3">
             <div className="relative flex w-full lg:w-5/12 flex-wrap items-stretch mb-3 mx-5">
               {formik.touched.name && formik.errors.name ? (
@@ -76,7 +90,7 @@ const NewUser = () => {
             </div>
 
             <div className="relative flex w-full lg:w-5/12 flex-wrap items-stretch mb-3 mx-5">
-            {formik.touched.email && formik.errors.email ? (
+              {formik.touched.email && formik.errors.email ? (
                 <div className="py-2 bg-red-200 border-l-4 border-red-500 text-red-700 p-4 w-full mb-2 rounded-2xl">
                   <p className="font-bold">Error</p>
                   <p>{formik.errors.email}</p>
@@ -84,7 +98,7 @@ const NewUser = () => {
               ) : null}
               <input
                 type="email"
-                placeholder="Escribe tu contraseña"
+                placeholder="Escribe tu email"
                 className="px-3 py-3 placeholder-pink-primary-600 text-pink-primary-600 relative  bg-gray-200  text-sm border border-pink-primary-600 outline-none focus:outline-none focus:ring w-full pr-10 rounded-full"
                 id="email"
                 onChange={formik.handleChange}
@@ -111,7 +125,7 @@ const NewUser = () => {
 
             {/* 2 row */}
             <div className="relative flex w-full lg:w-5/12 flex-wrap items-stretch mb-3 mx-5">
-            {formik.touched.password && formik.errors.password ? (
+              {formik.touched.password && formik.errors.password ? (
                 <div className="py-2 bg-red-200 border-l-4 border-red-500 text-red-700 p-4 w-full mt-2 rounded-2xl">
                   <p className="font-bold">Error</p>
                   <p>{formik.errors.password}</p>
@@ -145,7 +159,8 @@ const NewUser = () => {
             </div>
 
             <div className="relative flex w-full lg:w-5/12 flex-wrap items-stretch mb-3 mx-5">
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+              {formik.touched.confirmPassword &&
+              formik.errors.confirmPassword ? (
                 <div className="py-2 bg-red-200 border-l-4 border-red-500 text-red-700 p-4 w-full mt-2 rounded-2xl">
                   <p className="font-bold">Error</p>
                   <p>{formik.errors.confirmPassword}</p>
@@ -179,7 +194,10 @@ const NewUser = () => {
             </div>
           </div>
 
-          <button type="submit" className="h-12 w-10/12 lg:w-4/12 bg-pink-primary-600 text-white rounded-2xl flex justify-center items-center text-2xl font-bold">
+          <button
+            type="submit"
+            className="h-12 w-10/12 lg:w-4/12 bg-pink-primary-600 text-white rounded-2xl flex justify-center items-center text-2xl font-bold"
+          >
             Guardar Usuario
           </button>
         </form>

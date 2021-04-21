@@ -1,12 +1,23 @@
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
+import firebase from "../firebase";
 import Logo from "../icons/Logo";
 import Facebook from "../icons/Facebook";
 import Instagram from "../icons/Instagram";
 
 export default function Navbar() {
   const router = useRouter();
+
   const handleRouter = (path) => {
     router.push(path);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await firebase.logout();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="menu w-72 bg-pink-primary-200 min-h-screen hidden lg:block">
@@ -24,8 +35,40 @@ export default function Navbar() {
         <nav className="">
           <ul className="mt-10">
             <li
-              className={ `${router.pathname === "/Users" ?`text-pink-primary-500`:`text-gray-500` } h-12 flex justify-center  items-center text-lg  w-full px-5  cursor-pointer`}
-              onClick={() => handleRouter("/Users")}
+              className={`${
+                router.pathname === "/Houses"
+                  ? `text-pink-primary-500`
+                  : `text-gray-500`
+              } h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
+              onClick={() => handleRouter("/Houses")}
+            >
+              <div className="w-2/3 flex justify-end">
+                <div className="w-1/3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                </div>
+                <span className="w-2/3">Casas</span>
+              </div>
+            </li>
+            <li
+              className={`${
+                router.pathname === "/Users/NewUser"
+                  ? `text-pink-primary-500`
+                  : `text-gray-500`
+              } h-12 flex justify-center  items-center text-lg  w-full px-5  cursor-pointer`}
+              onClick={() => handleRouter("/Users/NewUser")}
             >
               <div className="w-2/3 flex justify-end">
                 <div className="w-1/3">
@@ -49,32 +92,11 @@ export default function Navbar() {
             </li>
 
             <li
-              className={`${router.pathname === "/Houses" ?`text-pink-primary-500`:`text-gray-500` } h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
-              onClick={() => handleRouter("/Houses")}
-            >
-              <div className="w-2/3 flex justify-end">
-                <div className="w-1/3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
-                </div>
-                <span className="w-2/3">Casas</span>
-              </div>
-            </li>
-
-            <li
-              className={` ${router.pathname === "/Services" ?`text-pink-primary-500`:`text-gray-500` } h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
+              className={` ${
+                router.pathname === "/Services"
+                  ? `text-pink-primary-500`
+                  : `text-gray-500`
+              } h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
               onClick={() => handleRouter("/Services")}
             >
               <div className="w-2/3 flex justify-end">
@@ -104,12 +126,14 @@ export default function Navbar() {
               </div>
             </li>
 
-            <li className={`h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}>
+            <li
+              className={`h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
+            >
               <div className="w-2/3 flex justify-end">
                 <div className="w-1/3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
+                    className="h-6 w-6 "
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -123,6 +147,33 @@ export default function Navbar() {
                   </svg>
                 </div>
                 <span className="w-2/3">Informes</span>
+              </div>
+            </li>
+
+            <li
+              className={`h-12 flex justify-center  items-center text-lg w-full px-5 text-gray-500 cursor-pointer`}
+            >
+              <div
+                className="w-2/3 flex justify-end cursor-pointer"
+                onClick={handleLogout}
+              >
+                <div className="w-1/3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
+                </div>
+                <span className="w-2/3">Cerrar Sesion</span>
               </div>
             </li>
           </ul>
