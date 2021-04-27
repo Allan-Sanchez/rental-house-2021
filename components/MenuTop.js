@@ -1,4 +1,4 @@
-const MenuTop = ({title}) => {
+const MenuTop = ({ title }) => {
   return (
     <div className="w-full h-20 flex  justify-around items-center mt-5">
       <div className=" hidden relative md:flex w-4/12 flex-wrap items-stretch mb-3">
@@ -30,7 +30,7 @@ const MenuTop = ({title}) => {
         <div className="bg-green-500 rounded-full h-16 w-16 flex justify-center items-center">
           <span className="block text-white text-2xl">AS</span>
         </div>
-        <h2 className="ml-5 text-xl">Title</h2>
+        <h2 className="ml-5 text-xl">{title}</h2>
       </div>
     </div>
   );
